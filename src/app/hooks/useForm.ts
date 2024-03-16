@@ -31,7 +31,6 @@ export default function useForm() {
   const special = '!@#$%&*()-_+=[]{};:,.<>?/'
 
   const handleChange: CheckboxChangeHandler = (e, name) => {
-    console.log(e, name)
     setForm({
       ...form,
       [name]: e
