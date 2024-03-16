@@ -5,16 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
 import useForm from "./hooks/useForm"
-import { useEffect } from "react"
 
 export default function Home() {
-
-  const [form, password, handleChange, handlerSliderChange, sliderValue, handleSubmit] = useForm()
-
-  useEffect(() => {
-    console.log(form)
-  }, [form])
-  
+  const [form, password, sliderValue, handleChange, handleSliderChange, handleSubmit] = useForm()
 
   const labelStyle = 'flex flex-row-reverse items-center gap-4 justify-end'
 
@@ -27,10 +20,18 @@ export default function Home() {
         </div>
         <hr></hr>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-{/*           <label className="flex flex-col gap-4 mb-4">
-            <p className="flex justify-between items-center">Caracteres<span>5</span></p>
-            <Slider name="characters" value={[sliderValue]} onChange={handlerSliderChange} min={6} max={22} />
-          </label> */}
+          <label className="flex flex-col gap-4 mb-4">
+            <p className="flex justify-between items-center">Caracteres<span>{sliderValue}</span></p>
+            <Slider
+              name="characters"
+              value={sliderValue}
+              onValueChange={handleSliderChange}
+              defaultValue={[8]}
+              min={6}
+              max={22}
+              step={1}
+            />
+          </label> 
           <label className={labelStyle}>
             Mayúsculas
             <Checkbox name="upper" checked={form.upper} onCheckedChange={(value) => handleChange(value, "upper")} />

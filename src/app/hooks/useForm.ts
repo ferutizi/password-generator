@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEventHandler, EventHandler, FormEvent, useState } from "react"
+import { FormEvent, useState } from "react"
 
 type PassForm = {
   characters: number,
@@ -22,8 +22,8 @@ export default function useForm() {
   }
 
   const [form, setForm] = useState<PassForm>(initialForm)
+  const [sliderValue, setSliderValue] = useState([8])
   const [password, setPassword] = useState<string>('')
-  const [sliderValue, setSliderValue] = useState(form.characters)
 
   const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
   const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -36,39 +36,33 @@ export default function useForm() {
       ...form,
       [name]: e
     })
-  }
+  }  
 
-  const handleSliderChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = parseInt(e.target.value)
+  const handleSliderChange = (value: number[]) => {
     setSliderValue(value)
-    setForm({
-      ...form,
-      characters: value
-    })
-  }
+  }  
 
   const handleSubmit = (e: FormEvent<HTMLFormElement> ) => {
     e.preventDefault()
-    const newPassword = generatePassword(form)
+    const newPassword = generatePassword(form, sliderValue)
     setPassword(newPassword)
   }
 
-  const generatePassword = (form: PassForm): string => {
+  const generatePassword = (form: PassForm, length: number[]): string => {
     let characters = ''
     let pass = ''
-    const length = form.characters
 
     characters += form.lower ? lowerCase : ''
     characters += form.upper ? upperCase : ''
     characters += form.number ? numbers : ''
     characters += form.specialChar ? special : ''
 
-    for(let i = 1; i <= length; i++) {
+    for(let i = 1; i <= length[0]; i++) {
       const randomNumber = Math.floor(Math.random() * characters.length)
       pass += characters.charAt(randomNumber)
     }
     return pass
   }
 
-  return [form, password, handleChange, handleSliderChange, sliderValue, handleSubmit] as const
+  return [form, password, sliderValue, handleChange, handleSliderChange, handleSubmit] as const
 }
