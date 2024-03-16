@@ -47,7 +47,7 @@ export default function Home() {
               max={22}
               step={1}
             />
-          </label> 
+          </label>
           <label className={labelStyle}>
             Mayúsculas
             <Checkbox name='upper' checked={form.upper} onCheckedChange={(value) => handleChange(value, 'upper')} />

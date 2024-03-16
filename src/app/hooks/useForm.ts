@@ -35,13 +35,13 @@ export default function useForm() {
       ...form,
       [name]: e
     })
-  }  
+  }
 
   const handleSliderChange = (value: number[]) => {
     setSliderValue(value)
-  }  
+  }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement> ) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const newPassword = generatePassword(form, sliderValue)
     setPassword(newPassword)
@@ -56,7 +56,7 @@ export default function useForm() {
     characters += form.number ? numbers : ''
     characters += form.specialChar ? special : ''
 
-    for(let i = 1; i <= length[0]; i++) {
+    for (let i = 1; i <= length[0]; i++) {
       const randomNumber = Math.floor(Math.random() * characters.length)
       pass += characters.charAt(randomNumber)
     }
